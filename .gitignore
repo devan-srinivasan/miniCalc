@@ -1,15 +1,2 @@
-.vnv/
-.env
-/.lake
-llm_filtered_results.json
-.lake
-*/pycache/*
-*/__pycache__/*
-.devcontainer
-setup_lean.sh
-*.log
-archive/
-results/
-results_copy/
-lean/LeanCalc/results/
-lean/LeanCalc/results_copy/
+old/
+.*
