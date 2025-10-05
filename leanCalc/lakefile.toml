@@ -14,5 +14,10 @@ maxSynthPendingDepth = 3
 name = "mathlib"
 scope = "leanprover-community"
 
+[[require]]
+name = "REPL"
+scope = "leanprover-community"
+git = "https://github.com/leanprover-community/repl"
+
 [[lean_lib]]
 name = "LeanCalc"
