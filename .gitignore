@@ -4,3 +4,5 @@ old/
 .lake/
 __*
 .DS_Store
+*.lock
+logs/

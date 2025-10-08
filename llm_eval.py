@@ -1,11 +1,11 @@
 import os
-from lean_interact import LeanREPLConfig, LeanServer, Command, LocalProject
+from lean_interact import LeanREPLConfig, LeanServer, Command, LocalProject, AutoLeanServer
 from datetime import datetime
 from tqdm import tqdm
 
 project = LocalProject(directory="./leanCalc/", lake_path="/Users/mrmackamoo/.elan/bin/lake")
 config = LeanREPLConfig(project=project) # download and build Lean REPL
-server = LeanServer(config) # start Lean REPL
+server = AutoLeanServer(config) # start Lean REPL
 
 class Prover:
   """
@@ -73,6 +73,25 @@ def evaluate(
         f.write(f"response {i}.{retry+1}: {response}\n")
 
         # parse lean response as success / failure
-        if "error" not in response.lower():
+        if any('no goals' in msg.data for msg in response.messages) and len(response.messages) == 1:
           proven = True
-    
+        else:
+          proven = False
+
+        f.write(f"response {i}.{retry+1}: {proven}\n")
+
+class DumProver(Prover):
+  def __init__(self):
+    super().__init__(name="DumProver")
+  
+  def prove(self, theorem: str) -> str:
+    return "bobby"  # always fails
+  
+dataset = ["example (a b : Nat) : a + b = b + a := by "] * 1000
+
+evaluate(
+  prover=DumProver(),
+  dataset=dataset,
+  max_retries=1,
+  resume=False,
+)
